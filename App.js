@@ -1,13 +1,17 @@
-import {View,Text} from 'react-native'
-import React, {Fragment} from 'react';
-const App = () => {
-  return (
-    <Fragment>
-     <View>
-       <Text>Hello welcome to carin</Text>
-     </View>
-    </Fragment>
-  );
-};
+import { View, Text, AppRegistry } from 'react-native'
+import { createStackNavigator, createAppContainer } from 'react-navigation';
+import Login from './src/components/Login';
+import React from 'react';
 
-export default App;
+const MainNavigator = createStackNavigator({
+  Home: { screen: Login },
+});
+const AppContainer = createAppContainer(MainNavigator);
+export default class App extends React.Component {
+  render() {
+    return (
+      <AppContainer />
+    );
+  }
+}
+AppRegistry.registerComponent('carin', () => App, null);
