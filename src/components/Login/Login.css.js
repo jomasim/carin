@@ -8,11 +8,11 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         flex: 1,
         borderRadius: 8,
-        marginTop: 100,
-        borderColor: '#E0E0E0',
+        marginTop: 70,
+        borderColor: '#9E9E9E',
     },
     usernameInput: {
-        marginTop: 10,
+        marginTop: 60,
         marginRight: 30,
         marginLeft: 30,
         flexDirection: 'row',
@@ -25,16 +25,18 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     personIcon: {
-        color: '#E0E0E0'
+        color: '#746E6E',
     },
     loginText: {
-        color: '#212121',
+        color: '#746E6E',
+        fontFamily: 'Montserrat-Medium'
     },
     signInLabel: {
         marginTop: 100,
         marginLeft: 30,
         fontSize: 20,
         color: '#424242',
+        fontFamily: 'Montserrat-Medium'
     },
     labelsContainer: {
         flexDirection: 'row',
@@ -42,28 +44,34 @@ const styles = StyleSheet.create({
     },
     rememberText: {
         textAlign: 'left',
-        marginLeft: 30,
+        marginLeft: 22,
+        fontSize: 14,
         flex: 0.5,
         color: '#9E9E9E',
+        fontFamily: 'Montserrat-Medium'
     },
     forgotText: {
         textAlign: 'right',
         flex: 0.5,
+        fontSize: 14,
         marginRight: 30,
         color: '#9E9E9E',
+        fontFamily: 'Montserrat-Medium'
     },
     notAmemberContainer: {
-        marginTop: 20,
+        marginTop: 114,
         marginLeft: 30,
         alignItems: "center",
     },
     notAmemberText: {
         textAlignVertical: "center",
         color: '#9E9E9E',
+        fontFamily: 'Montserrat-Regular'
     },
     signUpText: {
-        marginLeft: 30,
+        paddingLeft: 20,
         color: '#A03A3A',
+        fontFamily: 'Montserrat-Regular'
     },
     logoContainer: {
         alignItems: 'center',
@@ -73,11 +81,20 @@ const styles = StyleSheet.create({
         width: 60,
         height: 60,
         textAlignVertical: "center",
-        marginTop:30,
+        marginTop: 30,
     },
-    header:{
+    header: {
         color: '#9E9E9E',
-    }
+        fontFamily: 'Montserrat-Regular'
+    },
+    checkBox: {
+        marginLeft: 20,
+        width: 17,
+    },
+    inputText: {
+        color: '#9E9E9E',
+        fontFamily: 'Montserrat-Regular'
+    },
 });
 
 export default styles;
