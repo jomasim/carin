@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
         flex: 1,
         borderRadius: 8,
         marginTop: 70,
-        borderColor: '#9E9E9E',
+        borderColor: '#fff',
     },
     usernameInput: {
         marginTop: 60,
@@ -25,10 +25,10 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     personIcon: {
-        color: '#746E6E',
+        color: '#f0f0f0',
     },
     loginText: {
-        color: '#746E6E',
+        color: '#fff',
         fontFamily: 'Montserrat-Medium'
     },
     signInLabel: {
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
         marginLeft: 22,
         fontSize: 14,
         flex: 0.5,
-        color: '#9E9E9E',
+        color: '#D8BFBF',
         fontFamily: 'Montserrat-Medium'
     },
     forgotText: {
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
         flex: 0.5,
         fontSize: 14,
         marginRight: 30,
-        color: '#9E9E9E',
+        color: '#D8BFBF',
         fontFamily: 'Montserrat-Medium'
     },
     notAmemberContainer: {
@@ -65,12 +65,12 @@ const styles = StyleSheet.create({
     },
     notAmemberText: {
         textAlignVertical: "center",
-        color: '#9E9E9E',
+        color: '#fff',
         fontFamily: 'Montserrat-Regular'
     },
     signUpText: {
         paddingLeft: 20,
-        color: '#A03A3A',
+        color: '#FD8E1F',
         fontFamily: 'Montserrat-Regular'
     },
     logoContainer: {
@@ -80,11 +80,10 @@ const styles = StyleSheet.create({
     logo: {
         width: 60,
         height: 60,
-        textAlignVertical: "center",
         marginTop: 30,
     },
     header: {
-        color: '#9E9E9E',
+        color: '#D8BFBF',
         fontFamily: 'Montserrat-Regular'
     },
     checkBox: {
@@ -92,7 +91,7 @@ const styles = StyleSheet.create({
         width: 17,
     },
     inputText: {
-        color: '#9E9E9E',
+        color: '#fff',
         fontFamily: 'Montserrat-Regular'
     },
 });
