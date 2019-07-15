@@ -1,51 +1,69 @@
 import React, { Component } from "react";
-import { Container, Form, Item, Content, Input, Button, Text, Icon, View, CheckBox } from 'native-base';
+import { Container, Form, Item, Content, Input, Button, Text, Icon, View, CheckBox, Label } from 'native-base';
 import { ActivityIndicator, Image, ImageBackground } from 'react-native';
 import styles from './Login.css';
+import { WaveIndicator } from 'react-native-indicators';
+import { loginUser } from '../../redux/actions/Login';
+import { connect } from 'react-redux';
 
 
 class Login extends Component {
     static navigationOptions = { header: null };
 
-    state = { loading: false, username: '', password: '', validUsername: false, passwordHidden: true }
+    state = {
+        loading: false,
+        username: '',
+        password: '',
+        passwordHidden: true,
+        passwordError: false,
+        usernameError: false,
+        errors: {}
+    }
 
     componentDidUpdate() {
-        this.validateForm();
+
     }
-    validateForm = () => {
-        const { username, password, validUsername } = this.state;
-        if (username.length >= 6 && !validUsername) {
-            this.setState({ validUsername: true });
-            setTimeout(() => {
-                this.setState({ validUsername: false });
-            }, 1000);
+
+    validateUsername = () => {
+        const { username, usernameError } = this.state;
+        if (username.length < 4 && !usernameError) {
+            this.setState({ usernameError: "Username must be more than 3 characters" });
         }
-        // if (validUsername && username.length < 6) {
-        //     this.setState({ validUsername: false });
-        // }
     }
     toggleShow = () => {
         const { passwordHidden } = this.state;
         this.setState({ passwordHidden: !passwordHidden });
     }
-    onLogin = () => {
-        this.setState({ loading: true });
-        console.log(this.state);
-        setTimeout(() => {
-            this.setState({ loading: false });
-            const { navigate } = this.props.navigation;
-            navigate('Home')
-        }, 2000);
+
+    validatePassword = () => {
+        const { passwordError, password } = this.state;
+        if (password.length < 4 && !passwordError) {
+            this.setState({ passwordError: "Password must be more than 4 characters" });
+        }
+    };
+
+    formIsValid = () => {
+        return !this.validatePassword() && !this.validateUsername();
     }
     handleSubmit = () => {
-        console.log('helllo');
-        // const name = event.target.name;
-        // const value = event.target.value;
-        // this.setState({name: value});
-        console.log(this.state);
+        if (this.formIsValid()) {
+            const { loginUser: loginAction } = this.props;
+            const { username, password } = this.state;
+            loginAction({ username, password });
+            this.setState({ loading: true });
+            setTimeout(() => {
+                this.setState({ loading: false });
+                const { navigate } = this.props.navigation;
+                navigate('Welcome');
+            }, 2000);
+        }
+    }
+    handleRegister = () => {
+        const { navigate } = this.props.navigation;
+        navigate('Register');
     }
     render() {
-        const { loading, validUsername, passwordHidden } = this.state;
+        const { loading, usernameError, passwordHidden, passwordError, errors, password, username } = this.state;
         return (
             <Container>
                 <ImageBackground source={require("./back.png")} style={{ width: '100%', height: '100%' }}>
@@ -63,11 +81,14 @@ class Login extends Component {
                                 <Input name="username"
                                     placeholder="Username"
                                     style={styles.inputText}
+                                    onBlur={this.validateUsername}
                                     placeholderTextColor="#fff"
-                                    onChangeText={(username) => { this.setState({ username }) }}>
+                                    onChangeText={(username) => { this.setState({ username, usernameError: "" }) }}>
                                 </Input>
-                                {validUsername === true ? <Icon name="checkmark-circle" style={styles.personIcon}  ></Icon> : null}
+                                {usernameError ? (<Icon name="close-circle" style={styles.errorIcon} onPress={() => this.setState({ usernameError: "" })} ></Icon>) : null}
+                                {username && !usernameError ? (<Icon name="checkmark-circle" style={styles.personIcon} ></Icon>) : null}
                             </Item>
+                            {usernameError ? (<Label style={styles.messageLabel}>{usernameError}</Label>) : null}
                             <Item style={styles.passwordInput}>
                                 <Icon name="lock" style={styles.personIcon}></Icon>
                                 <Input name="password"
@@ -75,22 +96,27 @@ class Login extends Component {
                                     style={styles.inputText}
                                     secureTextEntry={passwordHidden}
                                     placeholderTextColor="#fff"
-                                    onChangeText={(password) => { this.setState({ password }) }}>
+                                    onBlur={this.validatePassword}
+                                    onChangeText={(password) => { this.setState({ password, passwordError: "" }) }}>
                                 </Input>
-                                <Icon name="eye" style={styles.personIcon} onPress={this.toggleShow}></Icon>
+                                {passwordError ? (<Icon name="close-circle" style={styles.errorIcon} onPress={() => this.setState({ passwordError: false, errors: this.getErrors({ passwordError: "" }) })} ></Icon>) :
+                                    (<Icon name="eye" style={styles.personIcon} onPress={this.toggleShow}></Icon>)}
                             </Item>
+                            {passwordError ? (<Label style={styles.messageLabel}>{passwordError}</Label>) : null}
                             <View style={styles.labelsContainer} >
                                 <CheckBox checked={true} color='#f0f0f0' style={styles.checkBox} />
                                 <Text style={styles.rememberText} >Remember me</Text>
                                 <Text style={styles.forgotText} >Forgot password?</Text>
                             </View>
                             <Button block bordered style={styles.loginButton} onPress={this.handleSubmit}>
-                                {loading ? <ActivityIndicator size="small" /> : <Text style={styles.loginText}>Login</Text>}
+                                {loading ? <WaveIndicator color='white' /> : <Text style={styles.loginText}>Login</Text>}
                             </Button>
                             <View style={styles.notAmemberContainer} >
                                 <Text style={styles.notAmemberText}>Not a member?
-                                <Text style={styles.signUpText} >Sign up</Text>
                                 </Text>
+                                <Button transparent onPress={this.handleRegister}>
+                                    <Text style={styles.signUpText} >Sign up</Text>
+                                </Button>
                             </View>
                         </Form>
                     </Content>
@@ -99,4 +125,10 @@ class Login extends Component {
         );
     }
 }
-export default Login;
+const mapStateToProps = (state) => ({
+    LoginStatus: state.login,
+});
+const mapDispatchToProps = {
+    loginUser,
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

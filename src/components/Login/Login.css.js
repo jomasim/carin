@@ -27,6 +27,9 @@ const styles = StyleSheet.create({
     personIcon: {
         color: '#f0f0f0',
     },
+    errorIcon: {
+        color: 'red',
+    },
     loginText: {
         color: '#fff',
         fontFamily: 'Montserrat-Medium'
@@ -62,11 +65,15 @@ const styles = StyleSheet.create({
         marginTop: 114,
         marginLeft: 30,
         alignItems: "center",
+        flexDirection: 'row',
+        flex: 1, 
+        justifyContent: 'center',
     },
     notAmemberText: {
         textAlignVertical: "center",
         color: '#fff',
-        fontFamily: 'Montserrat-Regular'
+        fontFamily: 'Montserrat-Regular',
+        textAlign: "center",
     },
     signUpText: {
         paddingLeft: 20,
@@ -93,6 +100,12 @@ const styles = StyleSheet.create({
     inputText: {
         color: '#fff',
         fontFamily: 'Montserrat-Regular'
+    },
+    messageLabel: {
+        marginTop: 10,
+        marginLeft: 30,
+        color: "red",
+        fontSize: 12,
     },
 });
 
