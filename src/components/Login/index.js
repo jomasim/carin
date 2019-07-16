@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import { Container, Form, Item, Content, Input, Button, Text, Icon, View, CheckBox, Label } from 'native-base';
-import { ActivityIndicator, Image, ImageBackground } from 'react-native';
+import { Image, ImageBackground } from 'react-native';
 import styles from './Login.css';
 import { WaveIndicator } from 'react-native-indicators';
 import { loginUser } from '../../redux/actions/Login';
 import { connect } from 'react-redux';
+
 
 
 class Login extends Component {
@@ -43,10 +44,18 @@ class Login extends Component {
     };
 
     formIsValid = () => {
-        return !this.validatePassword() && !this.validateUsername();
+        this.validatePassword()
+        this.validateUsername();
+        const { username, usernameError, passwordError, password } = this.state;
+        if (username && password && usernameError === "" && passwordError === "") {
+            return true;
+        }
+        return false;
     }
     handleSubmit = () => {
-        if (this.formIsValid()) {
+        const valid = this.formIsValid();
+        console.log(valid);
+        if (valid) {
             const { loginUser: loginAction } = this.props;
             const { username, password } = this.state;
             loginAction({ username, password });
@@ -99,7 +108,7 @@ class Login extends Component {
                                     onBlur={this.validatePassword}
                                     onChangeText={(password) => { this.setState({ password, passwordError: "" }) }}>
                                 </Input>
-                                {passwordError ? (<Icon name="close-circle" style={styles.errorIcon} onPress={() => this.setState({ passwordError: false, errors: this.getErrors({ passwordError: "" }) })} ></Icon>) :
+                                {passwordError ? (<Icon name="close-circle" style={styles.errorIcon} onPress={() => this.setState({ passwordError: "" })} ></Icon>) :
                                     (<Icon name="eye" style={styles.personIcon} onPress={this.toggleShow}></Icon>)}
                             </Item>
                             {passwordError ? (<Label style={styles.messageLabel}>{passwordError}</Label>) : null}
