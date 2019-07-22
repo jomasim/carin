@@ -1,5 +1,5 @@
 import axios from 'axios';
-const baseURL = "https://berke.loopy.co.ke/api";
+const baseURL = "http://b546e2c1.ngrok.io/api";
 const server = axios.create({
     baseURL,
 });

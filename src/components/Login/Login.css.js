@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
         marginLeft: 30,
         alignItems: "center",
         flexDirection: 'row',
-        flex: 1, 
+        flex: 1,
         justifyContent: 'center',
     },
     notAmemberText: {
@@ -107,6 +107,21 @@ const styles = StyleSheet.create({
         color: "red",
         fontSize: 12,
     },
+    welcomeText: {
+        textAlignVertical: "center",
+        color: '#fff',
+        fontFamily: 'Montserrat-Regular',
+        textAlign: "center",
+        fontSize: 18,
+    },
+    welcomeLogo: {
+        alignItems: "center",
+        justifyContent: "center",
+        flex: 1,
+    },
+    welcomeLoader: {
+        height: 10,
+    }
 });
 
 export default styles;

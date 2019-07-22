@@ -7,17 +7,20 @@ const loginReducer = (state = iniatialState, action = {}) => {
         case actionTypes.LOGIN_START:
             return {
                 ...state,
-                payload: action.payload,
+                data: action.payload,
+                loading: true,
             }
         case actionTypes.LOGIN_SUCCESS:
             return {
                 ...state,
-                payload: action.payload,
+                data: action.payload,
+                loading: false,
             }
         case actionTypes.LOGIN_FAILURE:
             return {
                 ...state,
-                payload: action.payload,
+                data: action.payload,
+                loading: false,
             }
         default:
             return state;

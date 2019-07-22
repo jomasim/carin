@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Container, Form, Item, Content, Input, Button, Text, Icon, View, CheckBox, Label } from 'native-base';
+import { Container, Form, Item, Content, Input, Button, Text, Icon, View, CheckBox, Label, Toast } from 'native-base';
 import { Image, ImageBackground } from 'react-native';
 import styles from './Login.css';
 import { WaveIndicator } from 'react-native-indicators';
@@ -12,17 +12,20 @@ class Login extends Component {
     static navigationOptions = { header: null };
 
     state = {
-        loading: false,
         username: '',
         password: '',
         passwordHidden: true,
         passwordError: false,
         usernameError: false,
-        errors: {}
+        errors: {},
     }
 
     componentDidUpdate() {
-
+        const { LoginStatus, loading } = this.props; 
+        if (LoginStatus && LoginStatus.user && !loading) {
+            const { navigate } = this.props.navigation;
+            navigate('Home');
+        }
     }
 
     validateUsername = () => {
@@ -54,17 +57,10 @@ class Login extends Component {
     }
     handleSubmit = () => {
         const valid = this.formIsValid();
-        console.log(valid);
         if (valid) {
             const { loginUser: loginAction } = this.props;
             const { username, password } = this.state;
             loginAction({ username, password });
-            this.setState({ loading: true });
-            setTimeout(() => {
-                this.setState({ loading: false });
-                const { navigate } = this.props.navigation;
-                navigate('Welcome');
-            }, 2000);
         }
     }
     handleRegister = () => {
@@ -72,7 +68,8 @@ class Login extends Component {
         navigate('Register');
     }
     render() {
-        const { loading, usernameError, passwordHidden, passwordError, errors, password, username } = this.state;
+        const { usernameError, passwordHidden, passwordError, password, username } = this.state;
+        const { loading } = this.props;
         return (
             <Container>
                 <ImageBackground source={require("./back.png")} style={{ width: '100%', height: '100%' }}>
@@ -135,7 +132,8 @@ class Login extends Component {
     }
 }
 const mapStateToProps = (state) => ({
-    LoginStatus: state.login,
+    LoginStatus: state.login.data,
+    loading: state.login.loading,
 });
 const mapDispatchToProps = {
     loginUser,

@@ -1,15 +1,18 @@
 import { View, Text, AppRegistry } from 'react-native'
 import { createStackNavigator, createAppContainer } from 'react-navigation';
-import Login from './src/components/Login';
+import LoginScreen from './src/components/Login';
 import RegisterScreen from './src/components/Register';
-import WelcomeScreen from './src/components/Home';
+import HomeScreen from './src/components/Home';
+import WelcomeScreen from './src/components/Welcome';
 import React from 'react';
 import store from './src/redux';
 import { Provider } from 'react-redux';
+import { Root } from 'native-base';
 
 const MainNavigator = createStackNavigator({
-  Home: { screen: Login },
   Welcome: { screen: WelcomeScreen },
+  Login: { screen: LoginScreen },
+  Home: { screen: HomeScreen },
   Register: { screen: RegisterScreen },
 });
 
@@ -18,7 +21,9 @@ export default class App extends React.Component {
   render() {
     return (
       <Provider store={store}>
-        <AppContainer />
+        <Root>
+          <AppContainer />
+        </Root>
       </Provider>
     );
   }
