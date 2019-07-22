@@ -1,13 +1,32 @@
-import {View,Text} from 'react-native'
-import React, {Fragment} from 'react';
-const App = () => {
-  return (
-    <Fragment>
-     <View>
-       <Text>Hello welcome to carin</Text>
-     </View>
-    </Fragment>
-  );
-};
+import { View, Text, AppRegistry } from 'react-native'
+import { createStackNavigator, createAppContainer } from 'react-navigation';
+import LoginScreen from './src/components/Login';
+import RegisterScreen from './src/components/Register';
+import HomeScreen from './src/components/Home';
+import WelcomeScreen from './src/components/Welcome';
+import React from 'react';
+import store from './src/redux';
+import { Provider } from 'react-redux';
+import { Root } from 'native-base';
 
-export default App;
+const MainNavigator = createStackNavigator({
+  Welcome: { screen: WelcomeScreen },
+  Login: { screen: LoginScreen },
+  Home: { screen: HomeScreen },
+  Register: { screen: RegisterScreen },
+});
+
+const AppContainer = createAppContainer(MainNavigator);
+export default class App extends React.Component {
+  render() {
+    return (
+      <Provider store={store}>
+        <Root>
+          <AppContainer />
+        </Root>
+      </Provider>
+    );
+  }
+}
+
+AppRegistry.registerComponent('carin', () => App);
