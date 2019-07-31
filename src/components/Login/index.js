@@ -21,7 +21,7 @@ class Login extends Component {
     }
 
     componentDidUpdate() {
-        const { LoginStatus, loading } = this.props; 
+        const { LoginStatus, loading } = this.props;
         if (LoginStatus && LoginStatus.user && !loading) {
             const { navigate } = this.props.navigation;
             navigate('Home');

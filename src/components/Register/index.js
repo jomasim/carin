@@ -5,6 +5,7 @@ import { WaveIndicator } from 'react-native-indicators';
 import styles from '../Login/Login.css';
 
 class Register extends Component {
+    static navigationOptions = { header: null };
     state = {
         loading: false,
         username: '',
@@ -22,6 +23,7 @@ class Register extends Component {
 
     render() {
         const { loading } = this.state;
+        console.log("register screen")
         return (
             <Container>
                 <ImageBackground source={require("./back.png")} style={{ width: '100%', height: '100%' }}>

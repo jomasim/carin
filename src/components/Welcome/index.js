@@ -10,6 +10,7 @@ import * as Animatable from 'react-native-animatable';
 import styles from '../Login/Login.css';
 import { WaveIndicator } from 'react-native-indicators';
 import { getToken } from '../../utils/auth';
+import { NavigationEvents } from 'react-navigation';
 
 class Welcome extends Component {
     static navigationOptions = { header: null };
@@ -21,27 +22,27 @@ class Welcome extends Component {
     componentDidUpdate() {
         const { navigate } = this.props.navigation;
         const { route, loading } = this.state;
-        if (!loading) {
-            this.setState({ loading: true });
-        }
-        if (route && loading) {
+        if (loading) {
             setTimeout(() => {
-                navigate(route);
                 this.setState({ loading: false });
             }, 1000);
         }
+        if (route && !loading) {
+            navigate(route);
+        }
+
     }
     componentDidMount() {
-        setTimeout(() => {
-            this.checkToken();
-        }, 3000);
+        this.checkToken();
     }
     checkToken = async () => {
         const { route } = this.state;
         const token = await getToken();
         const link = token ? 'Home' : 'Login';
         if (!route) {
-            this.setState({ route: link });
+            setTimeout(() => {
+                this.setState({ route: link, loading: true });
+            }, 1000);
         }
     }
 
@@ -49,6 +50,7 @@ class Welcome extends Component {
         const { loading } = this.state;
         return (
             <Container>
+                <NavigationEvents onDidFocus={this.checkToken} />
                 <ImageBackground source={require("./back.png")} style={{ width: '100%', height: '100%' }}>
                     {loading ? <WaveIndicator color='white' /> :
                         <Animatable.View
@@ -63,7 +65,6 @@ class Welcome extends Component {
                                 iterationCount={1}>
                                 <Text style={styles.welcomeText}>Welcome to Carab</Text>
                             </Animatable.View>
-                            {/* <DotIndicator style={styles.welcomeLoader} color='white' count={3} size={4} /> */}
                         </Animatable.View>}
                 </ImageBackground>
             </Container >
