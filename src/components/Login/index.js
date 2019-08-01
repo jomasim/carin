@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Container, Form, Item, Content, Input, Button, Text, Icon, View, CheckBox, Label, Toast } from 'native-base';
-import { Image, ImageBackground } from 'react-native';
+import { Image, ImageBackground, BackHandler } from 'react-native';
 import styles from './Login.css';
 import { WaveIndicator } from 'react-native-indicators';
 import { loginUser } from '../../redux/actions/Login';
@@ -20,6 +20,10 @@ class Login extends Component {
         errors: {},
     }
 
+    componentDidMount() {
+        const { navigate } = this.props.navigation;
+        BackHandler.addEventListener('hardwareBackPress', () =>   navigate('Welcome'))
+    }
     componentDidUpdate() {
         const { LoginStatus, loading } = this.props;
         if (LoginStatus && LoginStatus.user && !loading) {

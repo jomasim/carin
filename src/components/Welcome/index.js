@@ -10,7 +10,6 @@ import * as Animatable from 'react-native-animatable';
 import styles from '../Login/Login.css';
 import { WaveIndicator } from 'react-native-indicators';
 import { getToken } from '../../utils/auth';
-import { NavigationEvents } from 'react-navigation';
 
 class Welcome extends Component {
     static navigationOptions = { header: null };
@@ -35,6 +34,7 @@ class Welcome extends Component {
     componentDidMount() {
         this.checkToken();
     }
+    
     checkToken = async () => {
         const { route } = this.state;
         const token = await getToken();
@@ -50,7 +50,6 @@ class Welcome extends Component {
         const { loading } = this.state;
         return (
             <Container>
-                <NavigationEvents onDidFocus={this.checkToken} />
                 <ImageBackground source={require("./back.png")} style={{ width: '100%', height: '100%' }}>
                     {loading ? <WaveIndicator color='white' /> :
                         <Animatable.View
